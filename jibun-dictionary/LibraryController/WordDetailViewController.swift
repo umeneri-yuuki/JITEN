@@ -46,7 +46,7 @@ class WordDetailViewController: UIViewController ,UIScrollViewDelegate ,UIGestur
         
        scrollView.delegate = self
         
-        navigationController?.setNavigationBarHidden(true, animated: true)
+        //navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
 
@@ -56,13 +56,11 @@ class WordDetailViewController: UIViewController ,UIScrollViewDelegate ,UIGestur
         
         //selectDic.fetchWordList(row: Int(selectDic.dicid)!)
         
-        let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(
-            target: self,
-            action: #selector(WordDetailViewController.tapped(_:)))
+       // let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(target: self,action: #selector(WordDetailViewController.tapped(_:)))
         
-        tapGesture.delegate = self
+       // tapGesture.delegate = self
         
-        self.view.addGestureRecognizer(tapGesture)
+      //  self.view.addGestureRecognizer(tapGesture)
         
         //navigationController?.navigationBar.backgroundColor = UIColor.clear
         //navigationController?.navigationBar.alpha = 0.7
@@ -287,43 +285,20 @@ class WordDetailViewController: UIViewController ,UIScrollViewDelegate ,UIGestur
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        /*
-        //self.navigationController?.setNavigationBarHidden(true, animated: true)
-        //let clearbackimage = UIImage(named: "半透明2.png")
-        let clearbackimage = UIImage(named: "halfclear")
-        //let reSize = CGSize(width: (navigationController?.navigationBar.frame.size.width)!, height: (navigationController?.navigationBar.frame.size.height)!)
-        //let clearbackimage = UIImage(named: "半透明2.png")?.reSizeImage(reSize: reSize)
-        self.navigationController!.navigationBar.setBackgroundImage(clearbackimage, for: .default)
-        self.navigationController!.navigationBar.shadowImage = clearbackimage
-       // self.navigationController?.navigationBar.backgroundColor = UIColor.clear
-        self.navigationController?.navigationBar.barTintColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.7)
-        //self.navigationController?.navigationBar.alpha = 0.5
-        self.navigationController?.navigationBar.isTranslucent = true
- */
+
 
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        /*
-        self.navigationController!.navigationBar.setBackgroundImage(nil, for: .default)
-        self.navigationController!.navigationBar.shadowImage = nil
-        self.navigationController!.navigationBar.isTranslucent = false
-        self.navigationController?.navigationBar.alpha = 1.0
- */
+
     }
     @objc func tapped(_ sender: UITapGestureRecognizer){
-       // print(navigationController?.navigationBar.barTintColor)
         if self.navigationController?.navigationBar.isHidden == true {
-            //scrollView.frame.origin.y = scrollView.frame.origin.y - (navigationController?.navigationBar.frame.height)!
             navigationController?.setNavigationBarHidden(false, animated: true)
 
-            //navigationController?.navigationBar.isTranslucent = false
         } else {
-            //scrollView.frame.origin.y = scrollView.frame.origin.y + (navigationController?.navigationBar.frame.height)!
-            
             navigationController?.setNavigationBarHidden(true, animated: true)
 
-            //navigationController?.navigationBar.isTranslucent = true
         }
     }
     

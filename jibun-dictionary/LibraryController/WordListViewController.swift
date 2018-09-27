@@ -72,6 +72,19 @@ class WordListViewController: UIViewController, UITableViewDataSource, UITableVi
        // print("選択した辞書の名前：\()")
         print("選択した辞書のID：\(dicid)")
         
+
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        //self.navigationController!.navigationBar.backgroundColor = UIColor.white
+        //self.navigationController!.navigationBar.setBackgroundImage(nil, for: .default)
+       // self.navigationController!.navigationBar.shadowImage = nil
+       // navigationController?.navigationBar.alpha = 1.0
+        //self.navigationController!.navigationBar.isTranslucent = false
+        self.navigationController!.navigationBar.tintColor = UIColor.black
+
         ref = Database.database().reference()
         
         self.ref.child("alldictionarylist").observeSingleEvent(of: .value, with: { (snapshot) in
@@ -87,7 +100,7 @@ class WordListViewController: UIViewController, UITableViewDataSource, UITableVi
                 }
             }
             
-                 let wordlisteditbutton :UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "EditItem"), style: UIBarButtonItemStyle.plain, target: self, action:#selector(WordListViewController.tapWordEdit))
+            let wordlisteditbutton :UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "EditItem"), style: UIBarButtonItemStyle.plain, target: self, action:#selector(WordListViewController.tapWordEdit))
             print("公開2：\(self.selectpublish)")
             if self.selectpublish == false {
                 let changeprivatebutton :UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "Private"), style: UIBarButtonItemStyle.plain, target: self, action:#selector(WordListViewController.changePrivate))
@@ -98,10 +111,10 @@ class WordListViewController: UIViewController, UITableViewDataSource, UITableVi
             }
         }
         )
-
+        
         self.ref.child("alldictionarylist/\(dicid)/words").observeSingleEvent(of: .value, with: { (snapshot) in
             
-                let subdic = myDic(dictitle: "",dicid: "")
+            let subdic = myDic(dictitle: "",dicid: "")
             
             for list in snapshot.children {
                 
@@ -124,7 +137,7 @@ class WordListViewController: UIViewController, UITableViewDataSource, UITableVi
                 newword.wordid = self.selectwordid
                 newword.wordpos = self.selectwordpos
                 subdic.addWordList(word: newword)
- 
+                
             }
             self.selectDic.words = subdic.words.sorted(by: {$0.wordpos < $1.wordpos})
             self.TableView.reloadData()
@@ -132,19 +145,6 @@ class WordListViewController: UIViewController, UITableViewDataSource, UITableVi
         }
         )
         
-        
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        //self.navigationController!.navigationBar.backgroundColor = UIColor.white
-        //self.navigationController!.navigationBar.setBackgroundImage(nil, for: .default)
-       // self.navigationController!.navigationBar.shadowImage = nil
-       // navigationController?.navigationBar.alpha = 1.0
-        //self.navigationController!.navigationBar.isTranslucent = false
-        self.navigationController!.navigationBar.tintColor = UIColor.black
-
-       
         
        
         
@@ -382,6 +382,7 @@ class WordListViewController: UIViewController, UITableViewDataSource, UITableVi
         DispatchQueue.main.async {
         self.performSegue(withIdentifier: "toWordDetail",sender:nil)
         }
+        TableView.deselectRow(at: indexPath, animated: true)
         
     }
     

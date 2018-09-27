@@ -24,7 +24,7 @@ class RankingViewController: UIViewController , UITableViewDataSource, UITableVi
     var selectdictitle = ""
     var selectdicpublish = true
     var selectuserid = ""
-    var selectdicid = ""
+  //  var selectdicid = ""
     
     var refreshControl:UIRefreshControl!
     
@@ -58,9 +58,10 @@ class RankingViewController: UIViewController , UITableViewDataSource, UITableVi
                 let dic = snap.value as! [String: Any]
                 let dictitle = (dic["dictitle"])! as! String
                 let dicpublish = (dic["publish"])! as! Bool
-                self.selectdicid = (dic["dicid"])! as! String
+                let dicid = (dic["dicid"])! as! String
                 if dicpublish == true {
-                let newdic = myDic(dictitle: dictitle, dicid: "")
+                let newdic = myDic(dictitle: dictitle, dicid: dicid)
+   
                 self.selectuserid = (dic["userid"])! as! String
                 diclist.addDicList(dic: newdic)
                 }
@@ -126,7 +127,7 @@ class RankingViewController: UIViewController , UITableViewDataSource, UITableVi
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "toSomeList") {
             let SWLVC = segue.destination as! SomeoneWordListViewController
-            SWLVC.dicid = self.selectdicid
+            SWLVC.dicid = self.rankingdiclist.dics[selectrow].dicid
             SWLVC.selectdictitle = self.rankingdiclist.dics[selectrow].dictitle
             SWLVC.userid = selectuserid
             //WLVC.selectDic = mydiclist.dics[selectdicnum]
@@ -156,6 +157,7 @@ class RankingViewController: UIViewController , UITableViewDataSource, UITableVi
         DispatchQueue.main.async {
             self.performSegue(withIdentifier: "toSomeList",sender:nil)
         }
+        TableView.deselectRow(at: indexPath, animated: true)
         
     }
     

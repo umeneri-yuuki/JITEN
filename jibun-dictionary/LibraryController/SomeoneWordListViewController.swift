@@ -38,13 +38,14 @@ class SomeoneWordListViewController: UIViewController , UITableViewDataSource, U
     
     var wordid = ""
     
+    var refreshControl:UIRefreshControl!
     
     var ref: DatabaseReference!
         var storage = Storage.storage()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("\(dicid)")
+        print("dicid:::::\(dicid)")
 
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
         
@@ -53,6 +54,11 @@ class SomeoneWordListViewController: UIViewController , UITableViewDataSource, U
         tabBarController?.tabBar.isHidden = true
 
         ref = Database.database().reference()
+        
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: UIControlEvents.valueChanged)
+        self.TableView.addSubview(refreshControl)
+        
         
         self.ref.child("alldictionarylist/\(dicid)/words").observeSingleEvent(of: .value, with: { (snapshot) in
             
@@ -97,17 +103,54 @@ class SomeoneWordListViewController: UIViewController , UITableViewDataSource, U
         selectDic.dicid = self.dicid
         selectDic.dictitle = selectdictitle
         
-       // self.WordListTitle.title = selectDic.dictitle
-        
-        
         navigationController?.hidesBarsOnTap = false
         
         tableheight = TableView.frame.size.height
+        
+   
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    @objc func refresh(_ sender: UIRefreshControl) {
+            
+        self.ref.child("alldictionarylist/\(dicid)/words").observeSingleEvent(of: .value, with: { (snapshot) in
+            
+            let subdic = myDic(dictitle: "",dicid: "")
+            
+            for list in snapshot.children {
+                
+                let snap = list as! DataSnapshot
+                let word = snap.value as! [String: Any]
+                self.selectwordtitle = (word["wordtitle"])! as! String
+                self.selectwordid = (word["wordid"])! as! String
+                self.selectwordmean = (word["wordmean"])! as! String
+                self.selectwordpos = (word["wordpos"])!  as! Int
+                print("self.selectwordtitle:\(self.selectwordtitle)")
+                print("self.wordid:\(self.selectwordid)")
+                //let newdic = myDic(dictitle: (dic["dictitle"])!, dicid: (dic["dicid"])!)
+                //print(newdic.dictitle)
+                // self.mydiclist.addDicList(dic: newdic)
+                //print(self.mydiclist.dics[0].dictitle)
+                //let newdic = myDic(dictitle: self.selectwordtitle, dicid: self.dicid)
+                let newword = Word()
+                newword.wordtitle = self.selectwordtitle
+                newword.wordmean = self.selectwordmean
+                newword.wordid = self.selectwordid
+                newword.wordpos = self.selectwordpos
+                subdic.addWordList(word: newword)
+                
+            }
+            self.selectDic.words = subdic.words.sorted(by: {$0.wordpos < $1.wordpos})
+            self.TableView.reloadData()
+            
+        }
+        )
+        
+        sender.endRefreshing()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -124,6 +167,7 @@ class SomeoneWordListViewController: UIViewController , UITableViewDataSource, U
 
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print("selectDic.words.count:\(selectDic.words.count)")
         return selectDic.words.count
     }
     
@@ -148,6 +192,7 @@ class SomeoneWordListViewController: UIViewController , UITableViewDataSource, U
         DispatchQueue.main.async {
             self.performSegue(withIdentifier: "toSomeDetail",sender:nil)
         }
+         TableView.deselectRow(at: indexPath, animated: true)
         
     }
     

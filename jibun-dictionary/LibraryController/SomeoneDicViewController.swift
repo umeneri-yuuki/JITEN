@@ -41,7 +41,7 @@ class SomeoneDicViewController: UIViewController ,UIScrollViewDelegate ,UIGestur
 
         scrollView.delegate = self
         
-        navigationController?.setNavigationBarHidden(true, animated: true)
+       // navigationController?.setNavigationBarHidden(true, animated: true)
         
     }
     
@@ -50,13 +50,11 @@ class SomeoneDicViewController: UIViewController ,UIScrollViewDelegate ,UIGestur
     
     //selectDic.fetchWordList(row: Int(selectDic.dicid)!)
     
-    let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(
-        target: self,
-        action: #selector(WordDetailViewController.tapped(_:)))
+  //  let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(target: self,action: #selector(WordDetailViewController.tapped(_:)))
     
-    tapGesture.delegate = self
+    //tapGesture.delegate = self
     
-    self.view.addGestureRecognizer(tapGesture)
+   // self.view.addGestureRecognizer(tapGesture)
     
     //navigationController?.navigationBar.backgroundColor = UIColor.clear
     //navigationController?.navigationBar.alpha = 0.7
@@ -182,7 +180,7 @@ class SomeoneDicViewController: UIViewController ,UIScrollViewDelegate ,UIGestur
 
         
     }
-    
+    /*
     @objc func tapped(_ sender: UITapGestureRecognizer){
         // print(navigationController?.navigationBar.barTintColor)
         if self.navigationController?.navigationBar.isHidden == true {
@@ -198,6 +196,7 @@ class SomeoneDicViewController: UIViewController ,UIScrollViewDelegate ,UIGestur
             //navigationController?.navigationBar.isTranslucent = true
         }
     }
+ */
     open func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         
         page =  Int((scrollView.contentOffset.x + (0.5 * scrollView.bounds.width)) / scrollView.bounds.width)
