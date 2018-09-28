@@ -13,8 +13,10 @@ import FirebaseDatabase
 import FirebaseStorage
 import FirebaseAuth
 
+
 class DictionaryListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate{
   
+    
     var mydiclist = DicList.sharedInstance
     
     var dicid = ""
@@ -228,9 +230,13 @@ class DictionaryListViewController: UIViewController, UITableViewDataSource, UIT
         
     }
     
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
+    
+   
+
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return diclistsection.count
@@ -361,3 +367,4 @@ class DictionaryListViewController: UIViewController, UITableViewDataSource, UIT
     }
    
 }
+

@@ -11,6 +11,7 @@ target 'jibun-dictionary' do
   pod 'Firebase/Storage'
   pod 'Firebase/Database'
   pod 'Firebase/Auth'
+  pod 'XLPagerTabStrip'
 
   # Pods for jibun-dictionary
 
